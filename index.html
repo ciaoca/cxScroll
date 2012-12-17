@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>cxScroll 间歇式无缝滚动 &raquo; 在线演示 - 前端开发仓库</title>
+<style>
+body,h1,h2,h3,ul,li,p{margin:0;padding:0;}
+body{font:14px/1.7 Arial,"\5b8b\4f53";}
+h1,h2,h3{font:bold 36px/2 "\5fae\8f6f\96c5\9ed1";}
+h1{padding:0 20px;background:#333;color:#fff;}
+h2{font-size:20px;}
+h3{font-size:16px;}
+ul{list-style-type:none;}
+
+.wrap{padding:20px;}
+
+/* 水平滚动
+------------------------------ */
+.scroll_horizontal{position:relative;width:660px;height:120px;padding:20px;line-height:20px;background:#000;}
+.scroll_horizontal .box{overflow:hidden;position:relative;width:600px;height:120px;margin:0 auto;}
+.scroll_horizontal .list{overflow:hidden;width:9999px;}
+.scroll_horizontal .list li{float:left;width:200px;text-align:center;}
+.scroll_horizontal .plus,
+.scroll_horizontal .minus{position:absolute;top:50px;width:30px;height:60px;background:#f90;cursor:pointer;}
+.scroll_horizontal .plus{left:10px;}
+.scroll_horizontal .minus{right:10px;}
+.scroll_horizontal .plus:hover,
+.scroll_horizontal .minus:hover{background:#f60;}
+
+/* 垂直滚动
+------------------------------ */
+.scroll_vertical{position:relative;width:180px;height:340px;padding:20px;line-height:20px;background:#000;}
+.scroll_vertical .box{overflow:hidden;position:relative;height:280px;margin:40px 0 0 0;}
+.scroll_vertical .plus,
+.scroll_vertical .minus{position:absolute;left:50px;width:120px;height:30px;background:#09f;cursor:pointer;}
+.scroll_vertical .plus{top:10px;}
+.scroll_vertical .minus{bottom:10px;}
+.scroll_vertical .plus:hover,
+.scroll_vertical .minus:hover{background:#0cf;}
+.scroll_vertical ul{position:absolute;top:0;left:0;}
+.scroll_vertical li{height:140px;text-align:center;}
+</style>
+</head>
+<body>
+<h1>jQuery cxScroll 间歇式无缝滚动</h1>
+
+<div class="wrap">
+	<h2>横向滚动[right]</h2>
+	<div id="pic_list_1" class="scroll_horizontal">
+		<div class="box">
+			<ul class="list">
+				<li><a href="#"><img src="img/temp_pic_1.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_2.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_3.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_4.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_5.jpg"></a></li>
+			</ul>
+		</div>
+		<div class="plus"></div>
+		<div class="minus"></div>
+	</div>
+
+	<h2>横向滚动[left]</h2>
+	<div id="pic_list_2" class="scroll_horizontal">
+		<div class="box">
+			<ul class="list">
+				<li><a href="#"><img src="img/temp_pic_1.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_2.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_3.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_4.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_5.jpg"></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<h2>垂直滚动[bottom]</h2>
+	<div id="pic_list_3" class="scroll_vertical">
+		<div class="box">
+			<ul class="list">
+				<li><a href="#"><img src="img/temp_pic_1.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_2.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_3.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_4.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_5.jpg"></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<h2>垂直滚动[top]</h2>
+	<div id="pic_list_4" class="scroll_vertical">
+		<div class="box">
+			<ul class="list">
+				<li><a href="#"><img src="img/temp_pic_1.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_2.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_3.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_4.jpg"></a></li>
+				<li><a href="#"><img src="img/temp_pic_5.jpg"></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<h2>文档</h2>
+	<ul>
+		<li><a target="_blank" href="https://github.com/ciaoca/cxScroll">Github</a></li>
+		<li><a target="_blank" href="http://code.ciaoca.com/jquery/cxscroll/">中文文档</a></li>
+	</ul>
+	
+	<h2>作者</h2>
+	<p>Copyright(c) 2012 Ciaoca, http://ciaoca.com/</p>
+</div>
+
+<script src="js/jquery-1.4.4.min.js"></script>
+<script src="js/jquery.cxscroll.js"></script>
+<script>
+$("#pic_list_1").cxScroll();
+$("#pic_list_2").cxScroll({direction:"left",step:3});
+$("#pic_list_3").cxScroll({direction:"bottom",speed:500,time:1500,plus:false,minus:false});
+$("#pic_list_4").cxScroll({direction:"top",auto:false});
+</script>
+</body>
+</html>
