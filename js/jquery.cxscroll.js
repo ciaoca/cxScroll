@@ -1,10 +1,10 @@
 /*!
- * cxScroll 1.0
+ * cxScroll 1.0.1
  * http://code.ciaoca.com/
  * https://github.com/ciaoca/cxScroll
  * E-mail: ciaoca@gmail.com
  * Released under the MIT license
- * Date: 2012-12-07
+ * Date: 2013-08-27
  */
 (function($){
 	$.fn.cxScroll=function(settings){
@@ -154,11 +154,15 @@
 		};
 
 		// 事件：鼠标移入停止，移出开始
-		scroller.box.hover(function(){
-			scroller.fn.off();
-		},function(){
-			scroller.fn.on();
-		});
+		if(settings.auto){
+			obj.hover(function(){
+				settings.auto=false;
+				scroller.fn.off();
+			},function(){
+				settings.auto=true;
+				scroller.fn.on();
+			});
+		};
 
 		scroller.fn.addControl();
 		scroller.fn.on();
