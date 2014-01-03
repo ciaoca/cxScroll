@@ -5,7 +5,7 @@
 **版本：**
 
 * jQuery v1.4.4+
-* jQuery cxScroll v1.0
+* jQuery cxScroll v1.2
 
 **注意事项：**
 
