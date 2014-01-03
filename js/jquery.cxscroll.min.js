@@ -1,5 +1,5 @@
 /*!
- * cxScroll 1.2
+ * jQuery cxScroll 1.2
  * http://code.ciaoca.com/
  * https://github.com/ciaoca/cxScroll
  * E-mail: ciaoca@gmail.com
