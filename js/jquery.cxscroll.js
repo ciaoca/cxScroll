@@ -1,181 +1,215 @@
 /*!
- * cxScroll 1.0.1
+ * cxScroll 1.2
  * http://code.ciaoca.com/
  * https://github.com/ciaoca/cxScroll
  * E-mail: ciaoca@gmail.com
  * Released under the MIT license
- * Date: 2013-08-27
+ * Date: 2014-01-03
  */
 (function($){
 	$.fn.cxScroll=function(settings){
-		if(!this.length){return;};
+		if(!this.length){return};
 		settings=$.extend({},$.cxScroll.defaults,settings);
 
 		var obj=this;
-		var scroller={};
-		scroller.fn={};
-
-		scroller.box=obj.find(".box");
-		scroller.list=scroller.box.find(".list");
-		scroller.items=scroller.list.find("li");
-		scroller.itemSum=scroller.items.length;
-
-		if(scroller.itemSum<=1){return;};
-
-		scroller.plusBtn=obj.find(".plus");
-		scroller.minusBtn=obj.find(".minus");
-		scroller.itemWidth=scroller.items.outerWidth();
-		scroller.itemHeight=scroller.items.outerHeight();
-
-		if(settings.direction=="left"||settings.direction=="right"){
-			if(scroller.itemWidth*scroller.itemSum<=scroller.box.outerWidth()){return;};
-			scroller.plusVal="left";
-			scroller.minusVal="right";
-			scroller.moveVal=scroller.itemWidth;
-		}else{
-			if(scroller.itemHeight*scroller.itemSum<=scroller.box.outerHeight()){return;};
-			scroller.plusVal="top";
-			scroller.minusVal="bottom";
-			scroller.moveVal=scroller.itemHeight;
+		var scroller={
+			lock:false,
+			dom:{}
 		};
 
-		// 元素：左右操作按钮
-		if(settings.plus&&!scroller.plusBtn.length){
-			scroller.plusBtn=$("<a></a>",{"class":"plus"}).appendTo(obj);
-		};
-		if(settings.minus&&!scroller.minusBtn.length){
-			scroller.minusBtn=$("<a></a>",{"class":"minus"}).appendTo(obj);
-		};
+		scroller.init=function(){
+			scroller.dom.box=obj.find(".box");
+			scroller.dom.list=scroller.dom.box.find(".list");
+			scroller.dom.items=scroller.dom.list.find("li");
+			scroller.itemSum=scroller.dom.items.length;
 
-		// 元素：后补
-		scroller.list.append(scroller.list.html());
+			// 元素：后补
+			scroller.dom.list.append(scroller.dom.list.html());
+
+			// 没有元素或只有1个元素时，不进行滚动
+			if(scroller.itemSum<=1){return};
+
+			scroller.dom.prevBtn=obj.find(".prev");
+			scroller.dom.nextBtn=obj.find(".next");
+			scroller.itemWidth=scroller.dom.items.outerWidth();
+			scroller.itemHeight=scroller.dom.items.outerHeight();
+
+			if(settings.direction=="left"||settings.direction=="right"){
+				// 容器宽度不足时，不进行滚动
+				if(scroller.itemWidth*scroller.itemSum<=scroller.dom.box.outerWidth()){return};
+
+				scroller.prevVal="left";
+				scroller.nextVal="right";
+				scroller.moveVal=scroller.itemWidth;
+			}else{
+				// 容器高度不足时，不进行滚动
+				if(scroller.itemHeight*scroller.itemSum<=scroller.dom.box.outerHeight()){return};
+
+				scroller.prevVal="top";
+				scroller.nextVal="bottom";
+				scroller.moveVal=scroller.itemHeight;
+			};
+
+			// 添加元素：手动操作按钮
+			if(settings.prevBtn&&!scroller.dom.prevBtn.length){
+				scroller.dom.prevBtn=$("<a></a>",{"class":"prev"}).prependTo(obj);
+			};
+			if(settings.nextBtn&&!scroller.dom.nextBtn.length){
+				scroller.dom.nextBtn=$("<a></a>",{"class":"next"}).prependTo(obj);
+			};
+
+			// 事件：鼠标移入停止，移出开始
+			if(settings.auto){
+				obj.hover(function(){
+					settings.auto=false;
+					scroller.lock=false;
+					scroller.off();
+				},function(){
+					settings.auto=true;
+					scroller.lock=false;
+					scroller.on();
+				});
+			};
+
+			scroller.bindEvents();
+			scroller.on();
+		};
+		
+		scroller.bindEvents=function(){
+			if(settings.nextBtn&&scroller.dom.prevBtn.length){
+				scroller.dom.nextBtn.bind("click",function(){
+					if(!scroller.lock){
+						scroller.goto(scroller.nextVal,settings.accel);
+					};
+				});
+			};
+			if(settings.prevBtn&&scroller.dom.prevBtn.length){
+				scroller.dom.prevBtn.bind("click",function(){
+					if(!scroller.lock){
+						scroller.goto(scroller.prevVal,settings.accel);
+					};
+				});
+			};
+		};
 
 		// 方法：开始
-		scroller.fn.on=function(){
-			if(!settings.auto){return;};
-			scroller.fn.off();
+		scroller.on=function(){
+			if(!settings.auto){return};
+			if(typeof(scroller.run)!=="undefined"){
+				clearTimeout(scroller.run);
+			};
 
 			scroller.run=setTimeout(function(){
-				scroller.fn.goto(settings.direction);
+				scroller.goto(settings.direction);
 			},settings.time);
 		};
 
 		// 方法：停止
-		scroller.fn.off=function(){
-			if(typeof(scroller.run)!=="undefined"){clearTimeout(scroller.run);};
-		};
-
-		// 方法：增加控制
-		scroller.fn.addControl=function(){
-			if(settings.plus&&scroller.minusBtn.length){
-				scroller.plusBtn.bind("click",function(){
-					scroller.fn.goto(scroller.plusVal);
-				});
+		scroller.off=function(){
+			scroller.dom.box.stop(true);
+			if(typeof(scroller.run)!=="undefined"){
+				clearTimeout(scroller.run);
 			};
-			if(settings.minus&&scroller.minusBtn.length){
-				scroller.minusBtn.bind("click",function(){
-					scroller.fn.goto(scroller.minusVal);
-				});
-			};
-		};
-
-		// 方法：解除控制
-		scroller.fn.removeControl=function(){
-			if(scroller.plusBtn.length){scroller.plusBtn.unbind("click");};
-			if(scroller.minusBtn.length){scroller.minusBtn.unbind("click");};
 		};
 
 		// 方法：滚动
-		scroller.fn.goto=function(d){
-			scroller.fn.off();
-			scroller.fn.removeControl();
-			scroller.box.stop(true);
+		scroller.goto=function(d,t){
+			scroller.off();
+			if(settings.controlLock){
+				scroller.lock=true;
+			};
 
 			var _max;	// _max	滚动的最大限度
 			var _dis;	// _dis	滚动的距离
+			var _speed=t||settings.speed;
 
 			switch(d){
 			case "left":
 			case "top":
 				_max=0;
 				if(d=="left"){
-					if(parseInt(scroller.box.scrollLeft(),10)==0){
-						scroller.box.scrollLeft(scroller.itemSum*scroller.moveVal);
+					if(parseInt(scroller.dom.box.scrollLeft(),10)==0){
+						scroller.dom.box.scrollLeft(scroller.itemSum*scroller.moveVal);
 					};
-					_dis=scroller.box.scrollLeft()-(scroller.moveVal*settings.step);
+					_dis=scroller.dom.box.scrollLeft()-(scroller.moveVal*settings.step);
+					if(_dis%scroller.itemWidth>0){
+						_dis-=(_dis%scroller.itemWidth)-scroller.itemWidth;
+					};
 					if(_dis<_max){_dis=_max};
-					scroller.box.animate({"scrollLeft":_dis},settings.speed,function(){
-						if(parseInt(scroller.box.scrollLeft(),10)<=_max){
-							scroller.box.scrollLeft(0);
+					scroller.dom.box.animate({"scrollLeft":_dis},_speed,settings.easing,function(){
+						if(parseInt(scroller.dom.box.scrollLeft(),10)<=_max){
+							scroller.dom.box.scrollLeft(0);
 						};
-						scroller.fn.addControl();
 					});
 				}else{
-					if(parseInt(scroller.box.scrollTop(),10)==0){
-						scroller.box.scrollTop(scroller.itemSum*scroller.moveVal);
+					if(parseInt(scroller.dom.box.scrollTop(),10)==0){
+						scroller.dom.box.scrollTop(scroller.itemSum*scroller.moveVal);
 					};
-					_dis=scroller.box.scrollTop()-(scroller.moveVal*settings.step);
+					_dis=scroller.dom.box.scrollTop()-(scroller.moveVal*settings.step);
+					if(_dis%scroller.itemHeight>0){
+						_dis-=(_dis%scroller.itemHeight)-scroller.itemHeight;
+					};
 					if(_dis<_max){_dis=_max};
-					scroller.box.animate({"scrollTop":_dis},settings.speed,function(){
-						if(parseInt(scroller.box.scrollTop(),10)<=_max){
-							scroller.box.scrollTop(0);
+					scroller.dom.box.animate({"scrollTop":_dis},_speed,settings.easing,function(){
+						if(parseInt(scroller.dom.box.scrollTop(),10)<=_max){
+							scroller.dom.box.scrollTop(0);
 						};
-						scroller.fn.addControl();
 					});
 				};
 				break;
+
 			case "right":
 			case "bottom":
 				_max=scroller.itemSum*scroller.moveVal;
 				if(d=="right"){
-					_dis=scroller.box.scrollLeft()+(scroller.moveVal*settings.step);
+					_dis=scroller.dom.box.scrollLeft()+(scroller.moveVal*settings.step);
+					if(_dis%scroller.itemWidth>0){
+						_dis-=(_dis%scroller.itemWidth);
+					};
 					if(_dis>_max){_dis=_max};
-					scroller.box.animate({"scrollLeft":_dis},settings.speed,function(){
-						if(parseInt(scroller.box.scrollLeft(),10)>=_max){
-							scroller.box.scrollLeft(0);
+					scroller.dom.box.animate({"scrollLeft":_dis},_speed,settings.easing,function(){
+						if(parseInt(scroller.dom.box.scrollLeft(),10)>=_max){
+							scroller.dom.box.scrollLeft(0);
 						};
 					});
 				}else{
-					_dis=scroller.box.scrollTop()+(scroller.moveVal*settings.step);
+					_dis=scroller.dom.box.scrollTop()+(scroller.moveVal*settings.step);
+					if(_dis%scroller.itemHeight>0){
+						_dis-=(_dis%scroller.itemHeight);
+					};
 					if(_dis>_max){_dis=_max};
-					scroller.box.animate({"scrollTop":_dis},settings.speed,function(){
-						if(parseInt(scroller.box.scrollTop(),10)>=_max){
-							scroller.box.scrollTop(0);
+					scroller.dom.box.animate({"scrollTop":_dis},_speed,settings.easing,function(){
+						if(parseInt(scroller.dom.box.scrollTop(),10)>=_max){
+							scroller.dom.box.scrollTop(0);
 						};
 					});
 				};
 				break;
 			};
-			scroller.box.queue(function(){
-				scroller.fn.addControl();
-				scroller.fn.on();
+			
+			scroller.dom.box.queue(function(){
+				if(settings.controlLock){
+					scroller.lock=false;
+				};
+				scroller.on();
 				$(this).dequeue();
 			});
 		};
 
-		// 事件：鼠标移入停止，移出开始
-		if(settings.auto){
-			obj.hover(function(){
-				settings.auto=false;
-				scroller.fn.off();
-			},function(){
-				settings.auto=true;
-				scroller.fn.on();
-			});
-		};
-
-		scroller.fn.addControl();
-		scroller.fn.on();
+		scroller.init();
 	};
 
 	// 默认值
 	$.cxScroll={defaults:{
 		direction:"right",	// 滚动方向
+		easing:"swing",		// 缓动方式
 		step:1,				// 滚动步长
-		speed:800,			// 滚动速度
+		accel:160,			// 手动滚动速度
+		speed:800,			// 自动滚动速度
 		time:4000,			// 自动滚动间隔时间
 		auto:true,			// 是否自动滚动
-		plus:true,			// 是否使用 plus 按钮
-		minus:true			// 是否使用 minus 按钮
+		prevBtn:true,		// 是否使用 prev 按钮
+		nextBtn:true,		// 是否使用 next 按钮
+		safeLock:true	// 滚动时是否锁定控制按钮
 	}};
 })(jQuery);

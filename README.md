@@ -36,9 +36,14 @@
         <td>滚动步长</td>
     </tr>
     <tr>
+        <td>accel</td>
+        <td>160</td>
+        <td>手动滚动速度(ms)</td>
+    </tr>
+    <tr>
         <td>speed</td>
         <td>800</td>
-        <td>滚动速度(ms)</td>
+        <td>自动滚动速度(ms)</td>
     </tr>
     <tr>
         <td>time</td>
@@ -51,14 +56,19 @@
         <td>是否自动滚动</td>
     </tr>
     <tr>
-        <td>plus</td>
+        <td>prev</td>
         <td>true</td>
-        <td>是否使用 plus 按钮</td>
+        <td>是否使用 prev 按钮</td>
     </tr>
     <tr>
-        <td>minus</td>
+        <td>next</td>
         <td>true</td>
-        <td>是否使用 minus 按钮</td>
+        <td>是否使用 next 按钮</td>
+    </tr>
+    <tr>
+        <td>safeLock</td>
+        <td>true</td>
+        <td>滚动时是否锁定控制按钮</td>
     </tr>
 </table>
 
@@ -67,13 +77,29 @@
 
 ###CSS 样式结构
 ```css
-/* 无缝滚动样式 */ 
-.cxscroll{}
-.cxscroll .box{}
-.cxscroll .list{}
-.cxscroll .list li{}
-.cxscroll .plus{}
-.cxscroll .minus{}
+/* 横向滚动参考样式 */
+.cxscroll{position:relative;width:660px;height:120px;padding:10px;background-color:#eee;}
+.cxscroll .box{overflow:hidden;position:relative;width:580px;height:120px;margin:0 auto;}
+.cxscroll .list{overflow:hidden;width:9999px;}
+.cxscroll .list li{float:left;width:200px;}
+.cxscroll .prev,
+.cxscroll .next{position:absolute;top:50%;margin-top:-25px;width:40px;height:50px;background-image:url(img/control.png);background-repeat:no-repeat;font:0/0 Arial;cursor:pointer;}
+.cxscroll .prev{left:5px;background-position:0 0;}
+.cxscroll .next{right:5px;background-position:-40px 0;}
+.cxscroll .prev:hover{background-position:0 -50px;}
+.cxscroll .next:hover{background-position:-40px -50px;}
+
+/* 纵向滚动参考样式 */
+.cxscroll{position:relative;width:180px;height:340px;padding:10px;background:#eee;}
+.cxscroll .box{overflow:hidden;position:relative;top:40px;height:260px;}
+.cxscroll .list{position:absolute;top:0;left:0;}
+.cxscroll .list li{height:140px;text-align:center;}
+.cxscroll .prev,
+.cxscroll .next{position:absolute;left:50%;width:120px;height:30px;margin-left:-25px;width:50px;height:40px;background-image:url(img/control.png);background-repeat:no-repeat;font:0/0 Arial;cursor:pointer;}
+.cxscroll .prev{top:5px;background-position:-80px 0;}
+.cxscroll .next{bottom:5px;background-position:-130px 0;}
+.cxscroll .prev:hover{background-position:-80px -40px;}
+.cxscroll .next:hover{background-position:-130px -40px;}
 ```
 
 ###DOM 结构
@@ -87,9 +113,9 @@
             <li></li>
         </ul>
     </div>
-    <!-- 左右控制按钮，内部会自动创建，可省略 -->
-    <a class="plus"></a>
-    <a class="minus"></a>
+    <!-- 控制按钮内部会自动创建，可省略 -->
+    <a class="prev"></a>
+    <a class="next"></a>
 </div>
 ```
 
@@ -102,10 +128,12 @@ $("#element_id").cxScroll();
 $("#element_id").cxScroll({
     direction:"right",
     step:1,
+    accel:160,
     speed:800,
     time:4000,
     auto:true,
-    plus:true,
-    minus:true
+    prev:true,
+    next:true,
+    safeLock:true
 });
 ```
