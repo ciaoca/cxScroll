@@ -5,7 +5,7 @@
 **版本：**
 
 * jQuery v1.4.4+
-* jQuery cxScroll v1.2
+* jQuery cxScroll v1.2.1
 
 **注意事项：**
 
@@ -29,6 +29,11 @@
         <td>direction</td>
         <td>"right"</td>
         <td>滚动方向。可设置为："left"|"right"|"top"|"bottom"</td>
+    </tr>
+    <tr>
+        <td>easing</td>
+        <td>"swing"</td>
+        <td>缓动方式</td>
     </tr>
     <tr>
         <td>step</td>
@@ -56,12 +61,12 @@
         <td>是否自动滚动</td>
     </tr>
     <tr>
-        <td>prev</td>
+        <td>prevBtn</td>
         <td>true</td>
         <td>是否使用 prev 按钮</td>
     </tr>
     <tr>
-        <td>next</td>
+        <td>nextBtn</td>
         <td>true</td>
         <td>是否使用 next 按钮</td>
     </tr>
@@ -132,8 +137,8 @@ $("#element_id").cxScroll({
     speed:800,
     time:4000,
     auto:true,
-    prev:true,
-    next:true,
+    prevBtn:true,
+    nextBtn:true,
     safeLock:true
 });
 ```

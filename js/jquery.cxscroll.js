@@ -1,10 +1,10 @@
 /*!
- * jQuery cxScroll 1.2
+ * jQuery cxScroll 1.2.1
  * http://code.ciaoca.com/
  * https://github.com/ciaoca/cxScroll
  * E-mail: ciaoca@gmail.com
  * Released under the MIT license
- * Date: 2014-01-03
+ * Date: 2014-03-10
  */
 (function($){
 	$.fn.cxScroll=function(settings){
@@ -22,9 +22,6 @@
 			scroller.dom.list=scroller.dom.box.find(".list");
 			scroller.dom.items=scroller.dom.list.find("li");
 			scroller.itemSum=scroller.dom.items.length;
-
-			// 元素：后补
-			scroller.dom.list.append(scroller.dom.list.html());
 
 			// 没有元素或只有1个元素时，不进行滚动
 			if(scroller.itemSum<=1){return};
@@ -49,6 +46,9 @@
 				scroller.nextVal="bottom";
 				scroller.moveVal=scroller.itemHeight;
 			};
+
+			// 元素：后补
+			scroller.dom.list.append(scroller.dom.list.html());
 
 			// 添加元素：手动操作按钮
 			if(settings.prevBtn&&!scroller.dom.prevBtn.length){
@@ -124,67 +124,69 @@
 			var _speed=t||settings.speed;
 
 			switch(d){
-			case "left":
-			case "top":
-				_max=0;
-				if(d=="left"){
-					if(parseInt(scroller.dom.box.scrollLeft(),10)==0){
-						scroller.dom.box.scrollLeft(scroller.itemSum*scroller.moveVal);
-					};
-					_dis=scroller.dom.box.scrollLeft()-(scroller.moveVal*settings.step);
-					if(_dis%scroller.itemWidth>0){
-						_dis-=(_dis%scroller.itemWidth)-scroller.itemWidth;
-					};
-					if(_dis<_max){_dis=_max};
-					scroller.dom.box.animate({"scrollLeft":_dis},_speed,settings.easing,function(){
-						if(parseInt(scroller.dom.box.scrollLeft(),10)<=_max){
-							scroller.dom.box.scrollLeft(0);
+				case "left":
+				case "top":
+					_max=0;
+					if(d=="left"){
+						if(parseInt(scroller.dom.box.scrollLeft(),10)==0){
+							scroller.dom.box.scrollLeft(scroller.itemSum*scroller.moveVal);
 						};
-					});
-				}else{
-					if(parseInt(scroller.dom.box.scrollTop(),10)==0){
-						scroller.dom.box.scrollTop(scroller.itemSum*scroller.moveVal);
-					};
-					_dis=scroller.dom.box.scrollTop()-(scroller.moveVal*settings.step);
-					if(_dis%scroller.itemHeight>0){
-						_dis-=(_dis%scroller.itemHeight)-scroller.itemHeight;
-					};
-					if(_dis<_max){_dis=_max};
-					scroller.dom.box.animate({"scrollTop":_dis},_speed,settings.easing,function(){
-						if(parseInt(scroller.dom.box.scrollTop(),10)<=_max){
-							scroller.dom.box.scrollTop(0);
+						_dis=scroller.dom.box.scrollLeft()-(scroller.moveVal*settings.step);
+						if(_dis%scroller.itemWidth>0){
+							_dis-=(_dis%scroller.itemWidth)-scroller.itemWidth;
 						};
-					});
-				};
-				break;
-
-			case "right":
-			case "bottom":
-				_max=scroller.itemSum*scroller.moveVal;
-				if(d=="right"){
-					_dis=scroller.dom.box.scrollLeft()+(scroller.moveVal*settings.step);
-					if(_dis%scroller.itemWidth>0){
-						_dis-=(_dis%scroller.itemWidth);
-					};
-					if(_dis>_max){_dis=_max};
-					scroller.dom.box.animate({"scrollLeft":_dis},_speed,settings.easing,function(){
-						if(parseInt(scroller.dom.box.scrollLeft(),10)>=_max){
-							scroller.dom.box.scrollLeft(0);
+						if(_dis<_max){_dis=_max};
+						scroller.dom.box.animate({"scrollLeft":_dis},_speed,settings.easing,function(){
+							if(parseInt(scroller.dom.box.scrollLeft(),10)<=_max){
+								scroller.dom.box.scrollLeft(0);
+							};
+						});
+					}else{
+						if(parseInt(scroller.dom.box.scrollTop(),10)==0){
+							scroller.dom.box.scrollTop(scroller.itemSum*scroller.moveVal);
 						};
-					});
-				}else{
-					_dis=scroller.dom.box.scrollTop()+(scroller.moveVal*settings.step);
-					if(_dis%scroller.itemHeight>0){
-						_dis-=(_dis%scroller.itemHeight);
-					};
-					if(_dis>_max){_dis=_max};
-					scroller.dom.box.animate({"scrollTop":_dis},_speed,settings.easing,function(){
-						if(parseInt(scroller.dom.box.scrollTop(),10)>=_max){
-							scroller.dom.box.scrollTop(0);
+						_dis=scroller.dom.box.scrollTop()-(scroller.moveVal*settings.step);
+						if(_dis%scroller.itemHeight>0){
+							_dis-=(_dis%scroller.itemHeight)-scroller.itemHeight;
 						};
-					});
-				};
-				break;
+						if(_dis<_max){_dis=_max};
+						scroller.dom.box.animate({"scrollTop":_dis},_speed,settings.easing,function(){
+							if(parseInt(scroller.dom.box.scrollTop(),10)<=_max){
+								scroller.dom.box.scrollTop(0);
+							};
+						});
+					};
+					break;
+	
+				case "right":
+				case "bottom":
+					_max=scroller.itemSum*scroller.moveVal;
+					if(d=="right"){
+						_dis=scroller.dom.box.scrollLeft()+(scroller.moveVal*settings.step);
+						if(_dis%scroller.itemWidth>0){
+							_dis-=(_dis%scroller.itemWidth);
+						};
+						if(_dis>_max){_dis=_max};
+						scroller.dom.box.animate({"scrollLeft":_dis},_speed,settings.easing,function(){
+							if(parseInt(scroller.dom.box.scrollLeft(),10)>=_max){
+								scroller.dom.box.scrollLeft(0);
+							};
+						});
+					}else{
+						_dis=scroller.dom.box.scrollTop()+(scroller.moveVal*settings.step);
+						if(_dis%scroller.itemHeight>0){
+							_dis-=(_dis%scroller.itemHeight);
+						};
+						if(_dis>_max){_dis=_max};
+						scroller.dom.box.animate({"scrollTop":_dis},_speed,settings.easing,function(){
+							if(parseInt(scroller.dom.box.scrollTop(),10)>=_max){
+								scroller.dom.box.scrollTop(0);
+							};
+						});
+					};
+					break;
+				
+				// not default
 			};
 			
 			scroller.dom.box.queue(function(){
@@ -210,6 +212,6 @@
 		auto:true,			// 是否自动滚动
 		prevBtn:true,		// 是否使用 prev 按钮
 		nextBtn:true,		// 是否使用 next 按钮
-		safeLock:true	// 滚动时是否锁定控制按钮
+		safeLock:true		// 滚动时是否锁定控制按钮
 	}};
 })(jQuery);
