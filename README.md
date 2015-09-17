@@ -117,11 +117,6 @@ $("#element_id").cxScroll();
     <td>true</td>
     <td>是否使用 next 按钮</td>
   </tr>
-  <tr>
-    <td>hoverLock</td>
-    <td>true</td>
-    <td>鼠标移入移出锁定</td>
-  </tr>
 </table>
 
 ##API接口
@@ -155,10 +150,10 @@ $('#element_id').cxScroll({
   </tr>
   <tr>
     <td>prev(speed)</td>
-    <td>向前滚动。speed 为滚动速度（ms）</td>
+    <td>向前滚动。speed 为滚动速度(ms)</td>
   </tr>
   <tr>
     <td>next(speed)</td>
-    <td>向后滚动。speed 为滚动速度（ms）</td>
+    <td>向后滚动。speed 为滚动速度(ms)</td>
   </tr>
 </table>
