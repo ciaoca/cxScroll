@@ -1,0 +1,41 @@
+body,h1,h2,h3,ul,li,p{margin:0;padding:0;}
+body{font:14px/1.7 Arial,"\5b8b\4f53";}
+h1,h2,h3{font:bold 36px/2 "\5fae\8f6f\96c5\9ed1";}
+h1{padding:0 20px;background:#333;color:#fff;}
+h2{font-size:20px;}
+h3{font-size:16px;}
+ul{list-style-type:none;}
+
+.wrap{padding:20px;}
+
+/**
+ * 横向滚动
+ * ------------------------------ */
+.scroll_horizontal{position:relative;width:660px;height:120px;padding:10px;background-color:#eee;}
+.scroll_horizontal .box{overflow:hidden;position:relative;width:580px;height:120px;margin:0 auto;}
+.scroll_horizontal .list{overflow:hidden;width:9999px;}
+.scroll_horizontal .list li{float:left;width:200px;}
+.scroll_horizontal .prev,
+.scroll_horizontal .next{position:absolute;top:50%;margin-top:-25px;width:40px;height:50px;background-image:url(../img/control.png);background-repeat:no-repeat;font:0/0 Arial;cursor:pointer;}
+.scroll_horizontal .prev{left:5px;background-position:0 0;}
+.scroll_horizontal .next{right:5px;background-position:-40px 0;}
+.scroll_horizontal .prev:hover{background-position:0 -50px;}
+.scroll_horizontal .next:hover{background-position:-40px -50px;}
+
+/**
+ * 纵向滚动
+ * ------------------------------ */
+.scroll_vertical{position:relative;width:180px;height:340px;padding:10px;background:#eee;}
+.scroll_vertical .box{overflow:hidden;position:relative;top:40px;height:260px;}
+.scroll_vertical .list{position:absolute;top:0;left:0;}
+.scroll_vertical .list li{height:140px;text-align:center;}
+.scroll_vertical .prev,
+.scroll_vertical .next{position:absolute;left:50%;width:120px;height:30px;margin-left:-25px;width:50px;height:40px;background-image:url(../img/control.png);background-repeat:no-repeat;font:0/0 Arial;cursor:pointer;}
+.scroll_vertical .prev{top:5px;background-position:-80px 0;}
+.scroll_vertical .next{bottom:5px;background-position:-130px 0;}
+.scroll_vertical .prev:hover{background-position:-80px -40px;}
+.scroll_vertical .next:hover{background-position:-130px -40px;}
+
+
+
+#acts{margin-top:20px;}

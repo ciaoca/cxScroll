@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>cxScroll 间歇式无缝滚动 &raquo; 在线演示 - 前端开发仓库</title>
+<link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+<h1>jQuery cxScroll 间歇式无缝滚动</h1>
+
+<div class="wrap">
+  <h2>鼠标移入的时候，列表保持自动滚动</h2>
+  <div id="pic_list_1" class="scroll_horizontal">
+    <div class="box">
+      <ul class="list">
+        <li><img src="img/temp_pic_1.jpg"></li>
+        <li><img src="img/temp_pic_2.jpg"></li>
+        <li><img src="img/temp_pic_3.jpg"></li>
+        <li><img src="img/temp_pic_4.jpg"></li>
+        <li><img src="img/temp_pic_5.jpg"></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>不使用自动滚动</h2>
+  <div id="pic_list_2" class="scroll_horizontal">
+    <div class="box">
+      <ul class="list">
+        <li><img src="img/temp_pic_1.jpg"></li>
+        <li><img src="img/temp_pic_2.jpg"></li>
+        <li><img src="img/temp_pic_3.jpg"></li>
+        <li><img src="img/temp_pic_4.jpg"></li>
+        <li><img src="img/temp_pic_5.jpg"></li>
+      </ul>
+    </div>
+  </div>
+
+	<h2>文档</h2>
+	<ul>
+		<li><a target="_blank" href="https://github.com/ciaoca/cxScroll">Github</a></li>
+		<li><a target="_blank" href="http://code.ciaoca.com/jquery/cxscroll/">中文文档</a></li>
+	</ul>
+	
+	<h2>作者</h2>
+	<p><a target="_blank" href="http://ciaoca.com/">http://ciaoca.com/</a></p>
+	<p>Released under the MIT license</p>
+</div>
+
+<script src="http://cdn.staticfile.org/jquery/1.7.2/jquery.min.js"></script>
+<script src="js/jquery.cxscroll.min.js"></script>
+<script>
+$("#pic_list_1").cxScroll({
+  step: 3,
+  hoverLock: false
+});
+$("#pic_list_2").cxScroll({
+  step: 3,
+  auto: false
+});
+</script>
+</body>
+</html>
