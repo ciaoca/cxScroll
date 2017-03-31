@@ -1,4 +1,4 @@
-#jQuery cxScroll
+# jQuery cxScroll
 
 一款基于jQuery的无缝滚动插件，可自定义外观及调用参数，兼容主流浏览器。
 
@@ -16,10 +16,12 @@
 
 示例：http://code.ciaoca.com/jquery/cxscroll/demo/
 
-##使用方法
+## 使用方法
 
-###CSS 样式结构
+### CSS 样式结构
+
 除必要属性设置外，其他样式均可自行设置。
+
 ```css
 /* 横向滚动基本样式 */
 .cxscroll{}
@@ -38,7 +40,8 @@
 .cxscroll .next{}
 ```
 
-###DOM 结构
+### DOM 结构
+
 ```html
 <div id="element_id" class="cxscroll">
     <div class="box">
@@ -55,71 +58,29 @@
 </div>
 ```
 
-###调用 cxScroll
+### 调用 cxScroll
 ```javascript
 $("#element_id").cxScroll();
 ```
 
-##options 参数说明
-<table>
-  <tr>
-    <th width="80">名称</th>
-    <th width="80">默认值</th>
-    <th>说明</th>
-  </tr>
-  <tr>
-    <td>direction</td>
-    <td>'right'</td>
-    <td>滚动方向。可设置为："left", "right", "top", "bottom"</td>
-  </tr>
-  <tr>
-    <td>easing</td>
-    <td>'swing'</td>
-    <td>缓动方式</td>
-  </tr>
-  <tr>
-    <td>step</td>
-    <td>1</td>
-    <td>滚动步长</td>
-  </tr>
-  <tr>
-    <td>accel</td>
-    <td>200</td>
-    <td>手动滚动速度 (ms)，点击控制按钮滚动的速度。</td>
-  </tr>
-  <tr>
-    <td>speed</td>
-    <td>800</td>
-    <td>自动滚动速度 (ms)</td>
-  </tr>
-  <tr>
-    <td>time</td>
-    <td>4000</td>
-    <td>自动滚动间隔时间 (ms)</td>
-  </tr>
-  <tr>
-    <td>auto</td>
-    <td>true</td>
-    <td>是否自动滚动</td>
-  </tr>
-  <tr>
-    <td>hoverLock</td>
-    <td>true</td>
-    <td>鼠标移入移出锁定。鼠标进入区域内时停止自动轮播，离开后恢复自动轮播（仅在 auto 为 true 时有效）</td>
-  </tr>
-  <tr>
-    <td>prevBtn</td>
-    <td>true</td>
-    <td>是否使用 prev 按钮</td>
-  </tr>
-  <tr>
-    <td>nextBtn</td>
-    <td>true</td>
-    <td>是否使用 next 按钮</td>
-  </tr>
-</table>
+## options 参数说明
 
-##API接口
+名称|默认值|说明
+---|---|---
+direction|'right'|滚动方向。可设置为："left", "right", "top", "bottom"
+easing|'swing'|缓动方式
+step|1|滚动步长
+accel|200|手动滚动速度 (ms)，点击控制按钮滚动的速度。
+speed|800|自动滚动速度 (ms)
+time|4000|自动滚动间隔时间 (ms)
+auto|true|是否自动滚动
+hoverLock|true|鼠标移入移出锁定。鼠标进入区域内时停止自动轮播，离开后恢复自动轮播（仅在 auto 为 true 时有效）
+prevBtn|true|是否使用 prev 按钮
+nextBtn|true|是否使用 next 按钮
+
+
+## API接口
+
 ```javascript
 var Api;
 $('#element_id').cxScroll(function(api){
@@ -133,27 +94,10 @@ $('#element_id').cxScroll({
   Api = api;
 });
 ```
-<table>
-  <thead>
-    <tr>
-      <th width="200">名称</th>
-      <th>说明</th>
-    </tr>
-  </thead>
-  <tr>
-    <td>play()</td>
-    <td>开始自动播放</td>
-  </tr>
-  <tr>
-    <td>stop()</td>
-    <td>停止自动播放</td>
-  </tr>
-  <tr>
-    <td>prev(speed)</td>
-    <td>向前滚动。speed 为滚动速度(ms)</td>
-  </tr>
-  <tr>
-    <td>next(speed)</td>
-    <td>向后滚动。speed 为滚动速度(ms)</td>
-  </tr>
-</table>
+
+名称|说明
+---|---
+play()|开始自动播放
+stop()|停止自动播放
+prev(speed)|向前滚动。speed 为滚动速度(ms)
+next(speed)|向后滚动。speed 为滚动速度(ms)
