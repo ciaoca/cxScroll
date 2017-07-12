@@ -12,9 +12,9 @@
 1. 内部会自动创建 prev 及 next 切换按钮，也可以在外部直接创建，若外部已创建或设置 prevBtn:false 及 nextBtn:false ，内部将跳过此步骤；
 2. 若（滚动的列表宽度 ≤ 父元素的宽度），则不会自动创建 prev 及 next 切换按钮，也不会自动滚动。
 
-文档：http://code.ciaoca.com/jquery/cxscroll/
+文档：http://code.ciaoca.com/jquery/cxScroll/
 
-示例：http://code.ciaoca.com/jquery/cxscroll/demo/
+示例：http://code.ciaoca.com/jquery/cxScroll/demo/
 
 ## 使用方法
 
